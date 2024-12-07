@@ -17,12 +17,13 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Pytroch 单算子实现
 # 符合标准正态分布Tensor
-d_input0 = torch.randn(10,256,1024, device=device)
-d_input1 = torch.randn(10,1024,256, device=device)
+d_input0 = torch.randn(3,256,1024, device=device)
+d_input1 = torch.ones(3,1024,256, device=device)
 # print(d_input0)
 # print(d_input1)
 
 d_output0 = torch.matmul(d_input0,d_input1)
+# print(d_output0)
 # print(d_output0.shape) ([10,3,5])
 # print(d_output0)
 
@@ -37,4 +38,5 @@ BatchMatmul_extension = load(
 # 查看文档字符串
 print(BatchMatmul_extension.bmm.__doc__)
 d_output1 = BatchMatmul_extension.bmm(d_input0,d_input1)
-print(d_output0)
+# print(d_output1)
+print(torch.allclose(d_output0,d_output1,atol=1e-2))

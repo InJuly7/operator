@@ -1,13 +1,13 @@
 ninja_required_version = 1.3
 cxx = c++
-nvcc = /usr/local/cuda/bin/nvcc
+nvcc = /usr/local/cuda-12.2/bin/nvcc
 
-cflags = -DTORCH_EXTENSION_NAME=bmm_extension -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/TH -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /root/miniconda3/include/python3.10 -D_GLIBCXX_USE_CXX11_ABI=0 -fPIC -std=c++17
+cflags = -DTORCH_EXTENSION_NAME=bmm_extension -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/torch/csrc/api/include -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/TH -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/THC -isystem /usr/local/cuda-12.2/include -isystem /home/song/conda_env/operator/include/python3.8 -D_GLIBCXX_USE_CXX11_ABI=0 -fPIC -std=c++17
 post_cflags = 
-cuda_cflags = -DTORCH_EXTENSION_NAME=bmm_extension -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/TH -isystem /root/miniconda3/lib/python3.10/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /root/miniconda3/include/python3.10 -D_GLIBCXX_USE_CXX11_ABI=0 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_75,code=compute_75 -gencode=arch=compute_75,code=sm_75 --compiler-options '-fPIC' -O2 -arch=sm_75 -std=c++17
+cuda_cflags = -DTORCH_EXTENSION_NAME=bmm_extension -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/torch/csrc/api/include -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/TH -isystem /home/song/conda_env/operator/lib/python3.8/site-packages/torch/include/THC -isystem /usr/local/cuda-12.2/include -isystem /home/song/conda_env/operator/include/python3.8 -D_GLIBCXX_USE_CXX11_ABI=0 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_75,code=compute_75 -gencode=arch=compute_75,code=sm_75 --compiler-options '-fPIC' -O2 -arch=sm_75 -std=c++17
 cuda_post_cflags = 
 cuda_dlink_post_cflags = 
-ldflags = -shared -L/root/miniconda3/lib/python3.10/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/usr/local/cuda/lib64 -lcudart
+ldflags = -shared -L/home/song/conda_env/operator/lib/python3.8/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/usr/local/cuda-12.2/lib64 -lcudart
 
 rule compile
   command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
@@ -24,8 +24,8 @@ rule cuda_compile
 rule link
   command = $cxx $in $ldflags -o $out
 
-build bmm.o: compile /root/program/operator/Matmul/bmm.cpp
-build bmm.cuda.o: cuda_compile /root/program/operator/Matmul/bmm.cu
+build bmm.o: compile /home/song/program/operator/Matmul/bmm.cpp
+build bmm.cuda.o: cuda_compile /home/song/program/operator/Matmul/bmm.cu
 
 
 
