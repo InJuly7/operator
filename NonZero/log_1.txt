@@ -1,0 +1,8 @@
+Torch Nonzero Operator Result
+torch.Size([2201294, 3])
+nonzero(arg0: torch.Tensor) -> torch.Tensor
+
+Nonzero Kernel Implement
+
+torch.Size([2201294, 3])
+True
